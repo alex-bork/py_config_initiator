@@ -1,2 +1,2 @@
-# py_config_initiator
-Initiates config file using given template as string or as list
+# py_config_initor
+Config initializator, creates config file with specified variables if not exists
