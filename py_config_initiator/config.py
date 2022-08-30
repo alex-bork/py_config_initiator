@@ -10,7 +10,7 @@ class EmptyConfigsError(Exception):
     pass
 
 
-class ConfigInitor:
+class ConfigInitiator:
 
     def __init__(self, path:str, filename:str='config.ini'):
 
