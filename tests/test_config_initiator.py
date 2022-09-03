@@ -1,6 +1,6 @@
 from re import template
 import sys, os, unittest
-sys.path.append(os.path.join(os.path.realpath('.')))
+sys.path.append(os.path.realpath('.'))
 from py_config_initiator.module import ConfigInitiator
 
 
