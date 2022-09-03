@@ -5,6 +5,8 @@ from typing import List
 class ParametersError(Exception):
     pass
 
+class ParameterTypeError(Exception):
+    pass
 
 class EmptyConfigsError(Exception):
     pass
@@ -12,33 +14,37 @@ class EmptyConfigsError(Exception):
 
 class ConfigInitiator:
 
-    def __init__(self, path:str, filename:str='config.ini'):
+    def __init__(self, path:str, template: str, filename:str='config.ini'):
 
-        self.filename = filename
+        if not isinstance(path, str):
+            raise ParameterTypeError('parameter "path" must be a string')
+
+        if not isinstance(template, str):
+            raise ParameterTypeError('parameter "template" must be a string')
+
+        if not isinstance(filename, str):
+            raise ParameterTypeError('parameter "filename" must be a string')
+
         self.path = path
+        self.template = template
+        self.filename = filename
 
-    def set_template(self, string:str=None, list:List[str]=None):
+        self.__check()
 
-        if not string and not list:
-            raise ParametersError('Supply a template either as string or as list')
+    @classmethod
+    def from_list(cls, path:str, template:List[str], filename:str='config.ini'):
 
-        if string and list:
-            raise ParametersError('Supply only one template')
-
-        if ( string and not isinstance(string, str) ) or ( list and not isinstance(list, List) ):
-            raise ParametersError('Wrong type for parameter used.')
+        if not isinstance(template, List):
+            raise ParameterTypeError('Parameter list must be a list.')
     
-        self.value_check = []
-        
-        if list:
-            string = ''
-            for row in list:
-                string += row + '\n'
+        template_str = ''
 
-        self.template = string
-        return self
+        for row in template:
+            template_str += row + '\n'
 
-    def check(self):
+        return cls(path, template_str, filename)
+
+    def __check(self):
 
         if not self.path or not p.exists(self.path):
             raise ValueError('Supplied path does not exist.')
