@@ -1,7 +1,6 @@
-from re import template
 import sys, os, unittest
 sys.path.append(os.path.realpath('.'))
-from py_config_initiator.module import ConfigInitiator
+from py_config_initiator import ConfigInitiator
 
 
 class Test_ConfigInitor(unittest.TestCase):
